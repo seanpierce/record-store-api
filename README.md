@@ -20,7 +20,7 @@ $ brew install postgres
 $ // configure postgres defaults
 $ echo "export PGDATA=/usr/local/var/postgres" >> ~/.bash_profile
 $ echo "export PGHOST=/tmp" >> ~/.bash_profile
-$source ~/.bash_profile
+$ source ~/.bash_profile
 
 $ // NodeJS
 $ brew install node
