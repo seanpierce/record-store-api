@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     getItems: function () {
-      axios.get("http://localhost:3000/items")
+      axios.get("https://record-store-api.herokuapp.com/items")
       .then((response) => {
         this.items = response.data
       }, (error) => {
