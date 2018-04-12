@@ -1,41 +1,56 @@
 <template>
 <div>
   <h3>{{title}}</h3>
-  <ul id="example-1">
-  <li v-for="item in items">
-    {{ item.artist }} - {{ item.title }}
-    ${{ item.cost }}
-  </li>
-</ul>
+  <p v-if="isLoading">Loading...</p>
+  <div v-for="item in items" class="item">
+    <Item :artist="item.artist" :title="item.title" :cost="item.cost" :image="item.image" />
+  </div>
 </div>
 </template>
 
 <script>
+const API = {
+  dev: 'http://localhost:3000',
+  prod: 'https://record-store-api.herokuapp.com'
+}
+
 import axios from 'axios';
+import Item from './components/item.vue'
 
 export default {
   name: 'app',
-  data () {
+  data() {
     return {
       title: 'Record Store',
-      items: []
+      items: [],
+      isLoading: true
     }
   },
   methods: {
-    getItems: function () {
-      axios.get("https://record-store-api.herokuapp.com/items")
+    getItems() {
+      axios.get(`${API.dev}/items`)
       .then((response) => {
         this.items = response.data
+        this.isLoading = false;
       }, (error) => {
         console.log(error)
       })
     }
   },
-  mounted:function(){
+  mounted: function() {
     this.getItems()
   },
+  components: {
+    Item
+  }
 }
 </script>
 
 <style lang="scss">
+  * {
+    font-family: sans-serif;
+  }
+  .item {
+    display: inline;
+  }
 </style>
