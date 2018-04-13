@@ -28,8 +28,9 @@ export default {
   },
   methods: {
     getItems() {
-      axios.get(`${API.dev}/items`)
+      axios.get(`${API.prod}/items`)
       .then((response) => {
+        console.log(response)
         this.items = response.data
         this.isLoading = false;
       }, (error) => {
