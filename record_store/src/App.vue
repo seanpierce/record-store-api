@@ -1,7 +1,7 @@
 <template>
 <div>
   <h3>{{title}}</h3>
-  <p v-if="isLoading">Loading...</p>
+  <Loader v-if="isLoading">Loading...</Loader>
   <div v-for="item in items" class="item">
     <Item :id="item.id" :artist="item.artist" :title="item.title" :cost="item.cost" :image="item.image" />
   </div>
@@ -16,14 +16,16 @@ const API = {
 
 import axios from 'axios';
 import Item from './components/item.vue'
+import Loader from './components/loader.vue'
 
 export default {
   name: 'app',
   data() {
     return {
-      title: 'Record Store',
+      title: 'Rails/Vue Record Store',
       items: [],
-      isLoading: true
+      isLoading: true,
+      page: window.location.pathname
     }
   },
   methods: {
@@ -42,7 +44,8 @@ export default {
     this.getItems()
   },
   components: {
-    Item
+    Item,
+    Loader
   }
 }
 </script>
