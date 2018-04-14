@@ -3,7 +3,7 @@
   <h3>{{title}}</h3>
   <p v-if="isLoading">Loading...</p>
   <div v-for="item in items" class="item">
-    <Item :artist="item.artist" :title="item.title" :cost="item.cost" :image="item.image" />
+    <Item :id="item.id" :artist="item.artist" :title="item.title" :cost="item.cost" :image="item.image" />
   </div>
 </div>
 </template>

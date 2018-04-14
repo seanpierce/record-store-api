@@ -1,6 +1,6 @@
 <template class="ok">
   <div class="item">
-    <!-- <p>{{ artist }} - {{ title }} ${{ formatMoney(cost) }}</p> -->
+    <p>{{ artist }} - {{ title }} ${{ formatMoney(cost) }}</p>
     <img class="item-image" :src="image"/>
   </div>
 </template>
@@ -12,7 +12,7 @@ export default {
     return {
     }
   },
-  props: ['artist', 'title', 'cost', 'image'],
+  props: ['id', 'artist', 'title', 'cost', 'image'],
   methods: {
     formatMoney(cost) {
       return parseFloat(cost).toFixed(2)
