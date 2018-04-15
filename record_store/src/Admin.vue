@@ -54,9 +54,15 @@ export default {
     },
     setFile(e) {
       let file = e.target.files[0]
-      let formData = new FormData()
-      formData.append('file', file)
-      this.newItem.image = file
+      let reader = new FileReader()
+      reader.onload = fileLoadedEvent => {
+        let srcData = fileLoadedEvent.target.result; // <--- data: base64
+        let newImage = document.createElement('img');
+        newImage.src = srcData;
+        // use this for thumb preview
+        this.newItem.image = srcData
+      }
+      reader.readAsDataURL(file)
     }
   },
   mounted: function() {
