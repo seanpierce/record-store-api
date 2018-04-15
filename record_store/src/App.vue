@@ -9,34 +9,33 @@
 </template>
 
 <script>
+import axios from 'axios';
+import Item from './components/item.vue'
+import Loader from './components/loader.vue'
+
 const API = {
   dev: 'http://localhost:3000',
   prod: 'https://record-store-api.herokuapp.com'
 }
 
-import axios from 'axios';
-import Item from './components/item.vue'
-import Loader from './components/loader.vue'
-
 export default {
-  name: 'app',
+  name: 'home',
   data() {
     return {
       title: 'Rails/Vue Record Store',
       items: [],
-      isLoading: true,
-      page: window.location.pathname
+      isLoading: true
     }
   },
   methods: {
     getItems() {
-      axios.get(`${API.prod}/items`)
-      .then((response) => {
-        console.log(response)
-        this.items = response.data
+      axios.get(`${API.dev}/items`)
+      .then(res => {
+        console.log(res)
+        this.items = res.data
         this.isLoading = false;
-      }, (error) => {
-        console.log(error)
+      }, err => {
+        console.log(err)
       })
     }
   },
