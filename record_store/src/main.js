@@ -21,6 +21,11 @@ new Vue({
       return routes[this.currentRoute] || NotFound
     }
   },
+  methods: {
+    formatMoney(cost) {
+      return parseFloat(cost).toFixed(2)
+    }
+  },
   components: {
     Home,
     Admin
