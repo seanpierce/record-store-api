@@ -11,6 +11,10 @@
       <input type="text" name="title" v-model="newItem.title">
     </div>
     <div class="filedSet">
+      <label for="description">Description</label>
+      <textarea name="description" v-model="newItem.description" />
+    </div>
+    <div class="filedSet">
       <label for="cost">Cost</label>
       <input type="text" name="cost" v-model="newItem.cost">
     </div>
@@ -18,7 +22,8 @@
       <label for="image">Image</label>
       <input type="file" name="image" v-on:change="setFile($event)">
     </div>
-    <input type="submit" value="Submit">
+    <input v-if="!isLoading" type="submit" value="Submit">
+    <Loader v-if="isLoading" />
   </form>
 </div>
 </template>
@@ -26,6 +31,7 @@
 <script>
 import axios from 'axios';
 import SuccessMessage from './components/successMessage.vue'
+import Loader from './components/Loader.vue'
 
 export default {
   name: 'admin',
@@ -38,15 +44,18 @@ export default {
   },
   methods: {
     submitNewItem() {
+      this.isLoading = true
       let item = {...this.newItem}
       console.log('Posting item:', item)
       axios.post(`${this.$root.API}/items`, item)
         .then(res => {
           this.newItem = {}
           console.log(res)
+          this.isLoading = false
         })
         .catch(err => {
           console.log(err)
+          this.isLoading = false
         })
     },
     setFile(e) {
@@ -65,6 +74,7 @@ export default {
   mounted: function() {
   },
   components: {
+    Loader,
     SuccessMessage
   }
 }
@@ -76,6 +86,13 @@ export default {
   }
   input, label {
     display: block;
+    margin-bottom: 4px;
+  }
+  input[type="text"], textarea {
+    width: 100%;
+    max-width: 300px;
+    border: solid 1px lightgray;
+    padding: 4px;
   }
   .filedSet {
     margin-bottom: 1em;
