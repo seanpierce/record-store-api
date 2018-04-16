@@ -33,10 +33,14 @@ class ItemsController < ApplicationController
 
   # PATCH/PUT /items/1
   def update
-    if @item.update(item_params)
-      render json: @item
+    if current_user
+      if @item.update(item_params)
+        render json: @item
+      else
+        render json: @item.errors, status: :unprocessable_entity
+      end
     else
-      render json: @item.errors, status: :unprocessable_entity
+      return head(:unauthorized)
     end
   end
 
