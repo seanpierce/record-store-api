@@ -25,11 +25,7 @@
 
 <script>
 import axios from 'axios';
-
-const API = {
-  dev: 'http://localhost:3000',
-  prod: 'https://record-store-api.herokuapp.com'
-}
+import SuccessMessage from './components/successMessage.vue'
 
 export default {
   name: 'admin',
@@ -44,8 +40,9 @@ export default {
     submitNewItem() {
       let item = {...this.newItem}
       console.log('Posting item:', item)
-      axios.post(`${API.dev}/items`, item)
+      axios.post(`${this.$root.API}/items`, item)
         .then(res => {
+          this.newItem = {}
           console.log(res)
         })
         .catch(err => {
@@ -68,6 +65,7 @@ export default {
   mounted: function() {
   },
   components: {
+    SuccessMessage
   }
 }
 </script>
