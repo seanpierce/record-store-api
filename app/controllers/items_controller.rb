@@ -17,12 +17,17 @@ class ItemsController < ApplicationController
 
   # POST /items
   def create
-    @item = Item.new(item_params)
+    if current_user
+      # authorized
+      @item = Item.new(item_params)
 
-    if @item.save
-      render json: @item, status: :created, location: @item
+      if @item.save
+        render json: @item, status: :created, location: @item
+      else
+        render json: @item.errors, status: :unprocessable_entity
+      end
     else
-      render json: @item.errors, status: :unprocessable_entity
+      return head(:unauthorized)
     end
   end
 
@@ -37,11 +42,20 @@ class ItemsController < ApplicationController
 
   # DELETE /items/1
   def destroy
-    if @item.destroy
-      render json: {
-        status: 200,
-        message: "'#{@item.artist} - #{@item.title}' removed"
-      }
+    if current_user
+      # authorized
+      if @item.destroy
+        render json: {
+          status: 200,
+          message: "'#{@item.artist} - #{@item.title}' removed"
+        }
+      else
+        render json: {
+          message: "Item was not removed"
+        }
+      end
+    else
+      return head(:unauthorized)
     end
   end
 
