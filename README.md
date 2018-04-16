@@ -1,7 +1,7 @@
 # Record Store API
 *using ruby-2.4.2*
 
-Backend API developed using Ruby on Rails. Front end application developed using VueJS
+Backend API developed using Ruby on Rails, using <a href="https://github.com/plataformatec/devise>devise</a> and <a href="https://github.com/gonzalo-bulnes/simple_token_authentication>simple_token_authentication</a> to authorize the API's endpoints. The frontend application was developed using VueJS.
 
 ### Dependencies
 ```
