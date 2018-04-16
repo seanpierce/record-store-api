@@ -13,11 +13,6 @@ import axios from 'axios';
 import Item from './components/item.vue'
 import Loader from './components/loader.vue'
 
-const API = {
-  dev: 'http://localhost:3000',
-  prod: 'https://record-store-api.herokuapp.com'
-}
-
 export default {
   name: 'home',
   data() {
@@ -29,7 +24,7 @@ export default {
   },
   methods: {
     getItems() {
-      axios.get(`${API.dev}/items`)
+      axios.get(`${this.$root.API}/items`)
       .then(res => {
         console.log(res)
         this.items = res.data
@@ -53,7 +48,8 @@ export default {
   * {
     font-family: sans-serif;
   }
-  .item {
-    display: inline;
+  Item {
+    position: relative;
+    display: inline-block;
   }
 </style>
