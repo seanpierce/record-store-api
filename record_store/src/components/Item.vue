@@ -1,7 +1,12 @@
-<template class="ok">
+<template>
   <div class="item">
-    <p>{{ artist }} - {{ title }} ${{ formatMoney(cost) }}</p>
-    <img class="item-image" :src="image"/>
+    <img :src="image"/>
+    <div class="info">
+      <p>
+        {{ artist }} - {{ title }}<br>
+        <span>${{ formatMoney(cost) }}</span>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -25,4 +30,39 @@ export default {
 </script>
 
 <style>
+.item {
+  position: relative;
+  display: inline-block;
+  margin: 2px;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+}
+.item img {
+  width: 100%;;
+}
+.item .info {
+  position: absolute;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  z-index: 10;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: all 0.25s;
+}
+.item .info p {
+  padding: 6px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-60%);
+  cursor: pointer;
+}
+.item .info p span {
+  font-size: 1.25em;
+}
+.item:hover .item .info {
+  top: 0;
+}
 </style>
