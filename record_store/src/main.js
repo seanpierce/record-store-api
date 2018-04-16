@@ -12,7 +12,9 @@ const routes = {
 new Vue({
   el: '#app',
   data: {
-    currentRoute: window.location.pathname
+    currentRoute: window.location.pathname,
+    API: 'http://localhost:3000',
+    // API: 'https://record-store-api.herokuapp.com'
   },
   computed: {
     ViewComponent () {
