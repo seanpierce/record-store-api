@@ -4,7 +4,7 @@
     <div class="info">
       <p>
         {{ artist }} - {{ title }}<br>
-        <span>${{ formatMoney(cost) }}</span>
+        <span>${{ this.$root.formatMoney(cost) }}</span>
       </p>
     </div>
   </div>
@@ -19,9 +19,6 @@ export default {
   },
   props: ['id', 'artist', 'title', 'cost', 'image'],
   methods: {
-    formatMoney(cost) {
-      return parseFloat(cost).toFixed(2)
-    }
   },
   mounted: () => {
     console.log('mount up')
@@ -37,6 +34,7 @@ export default {
   width: 200px;
   height: 200px;
   overflow: hidden;
+  cursor: pointer;
 }
 .item img {
   width: 100%;;
@@ -57,7 +55,6 @@ export default {
   position: absolute;
   top: 50%;
   transform: translateY(-60%);
-  cursor: pointer;
 }
 .item .info p span {
   font-size: 1.25em;
