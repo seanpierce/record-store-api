@@ -1,5 +1,8 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :update, :destroy]
+  # Authorized routes require setting headers:
+  # X-User-Token and X-User-Email in the client's request
+  # (see simple_token_authentication gem documentation)
 
   # GET /items
   def index
