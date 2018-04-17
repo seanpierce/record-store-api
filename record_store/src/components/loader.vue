@@ -1,4 +1,4 @@
-<template class="ok">
+<template>
   <div class="loader"></div>
 </template>
 

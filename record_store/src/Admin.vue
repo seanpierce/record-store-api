@@ -1,30 +1,33 @@
 <template>
 <div>
-  <h3>{{ title }}</h3>
-  <form id="new-item" v-on:submit.prevent="submitNewItem()">
-    <div class="filedSet">
-      <label for="artist">Artist</label>
-      <input type="text" name="artist" v-model="newItem.artist">
-    </div>
-    <div class="filedSet">
-      <label for="title">Title</label>
-      <input type="text" name="title" v-model="newItem.title">
-    </div>
-    <div class="filedSet">
-      <label for="description">Description</label>
-      <textarea name="description" v-model="newItem.description" />
-    </div>
-    <div class="filedSet">
-      <label for="cost">Cost</label>
-      <input type="text" name="cost" v-model="newItem.cost">
-    </div>
-    <div class="filedSet">
-      <label for="image">Image</label>
-      <input type="file" name="image" v-on:change="setFile($event)">
-    </div>
-    <input v-if="!isLoading" type="submit" value="Submit">
-    <Loader v-if="isLoading" />
-  </form>
+  <div v-if="current_user">
+    <h3>{{ title }}</h3>
+    <form id="new-item" v-on:submit.prevent="submitNewItem()">
+      <div class="filedSet">
+        <label for="artist">Artist</label>
+        <input type="text" name="artist" v-model="newItem.artist">
+      </div>
+      <div class="filedSet">
+        <label for="title">Title</label>
+        <input type="text" name="title" v-model="newItem.title">
+      </div>
+      <div class="filedSet">
+        <label for="description">Description</label>
+        <textarea name="description" v-model="newItem.description" />
+      </div>
+      <div class="filedSet">
+        <label for="cost">Cost</label>
+        <input type="text" name="cost" v-model="newItem.cost">
+      </div>
+      <div class="filedSet">
+        <label for="image">Image</label>
+        <input type="file" name="image" v-on:change="setFile($event)">
+      </div>
+      <input v-if="!isLoading" type="submit" value="Submit">
+      <Loader v-if="isLoading" />
+    </form>
+  </div>
+  <Login v-if="!current_user" />
 </div>
 </template>
 
@@ -32,6 +35,7 @@
 import axios from 'axios';
 import SuccessMessage from './components/successMessage.vue'
 import Loader from './components/Loader.vue'
+import Login from './components/Login.vue'
 
 export default {
   name: 'admin',
@@ -39,7 +43,8 @@ export default {
     return {
       title: 'Admin',
       newItem: {},
-      isLoading: false
+      isLoading: false,
+      current_user: null
     }
   },
   methods: {
@@ -81,7 +86,8 @@ export default {
   },
   components: {
     Loader,
-    SuccessMessage
+    SuccessMessage,
+    Login
   }
 }
 </script>
