@@ -42,3 +42,10 @@ $ cd record-store
 $ npm install
 $ npm run dev // will serve on localhost:8080 by default
 ```
+
+
+### TODOs
+* Store session token in localStorage
+* Create backend method to verify token's validity
+* Send auth params in API headers
+* Complete frontend CRUD operations for Item model
