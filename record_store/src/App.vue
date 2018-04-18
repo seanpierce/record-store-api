@@ -3,7 +3,7 @@
     <div v-if="!selectedItem">
       <h3>{{title}}</h3>
       <Loader v-if="isLoading">Loading...</Loader>
-      <div v-for="item in items" class="item">
+      <div v-for="(item, index) in items" :key="index" class="item">
         <div v-on:click="setSelectedItem(item)">
           <Item :id="item.id" :artist="item.artist" :title="item.title" :cost="item.cost" :image="item.image"/>
         </div>
