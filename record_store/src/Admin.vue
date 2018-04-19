@@ -45,12 +45,14 @@
         <tbody>
           <tr v-for="(item, index) in items" :key="index" class="edit-item">
             <td class="edit-action">Edit</td>
-            <td class="edit-action">Remove</td>
+            <td class="edit-action" v-on:click="removingItem = item">Remove</td>
             <td>{{item.artist}} - {{item.title}}</td>
           </tr>
         </tbody>
       </table>
     </div>
+
+    <RemoveItemModal v-if="removingItem" :item="removingItem" class="modal" />
 
   </div>
 </template>
@@ -59,6 +61,7 @@
 import axios from 'axios';
 import SuccessMessage from './components/successMessage.vue'
 import Loader from './components/Loader.vue'
+import RemoveItemModal from './components/RemoveItemModal.vue'
 
 export default {
   name: 'admin',
@@ -69,7 +72,8 @@ export default {
       items: [],
       isLoading: false,
       current_user: null,
-      adminSection: null
+      adminSection: null,
+      removingItem: null
     }
   },
   methods: {
@@ -136,6 +140,7 @@ export default {
   components: {
     Loader,
     SuccessMessage,
+    RemoveItemModal
   },
   watch: {
     adminSection: function (val) {
@@ -180,7 +185,7 @@ export default {
   tr.edit-item {
     border-collapse: collapse;
     td {
-      padding: 4px;
+      padding: 4px 8px;
       transition: all 0.25s;
     }
     td.edit-action {
@@ -192,5 +197,9 @@ export default {
     &:nth-child(odd) {
       background-color: #f3f3f3;
     }
+  }
+  .modal {
+    position: fixed;
+    top: 1;
   }
 </style>
