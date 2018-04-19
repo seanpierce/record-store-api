@@ -21,7 +21,6 @@ export default {
   methods: {
   },
   mounted: () => {
-    console.log('mount up')
   },
 }
 </script>

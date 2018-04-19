@@ -46,7 +46,6 @@ export default {
       })
     },
     setSelectedItem(item) {
-      console.log(item)
       this.selectedItem = item
     }
   },
