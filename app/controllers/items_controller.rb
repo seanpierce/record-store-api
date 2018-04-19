@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :update, :destroy]
+  before_action :authorize_route, only: [:create, :update, :destroy]
   # Authorized routes require setting headers:
   # X-User-Token and X-User-Email in the client's request
   # (see simple_token_authentication gem documentation)
@@ -17,49 +18,35 @@ class ItemsController < ApplicationController
 
   # POST /items
   def create
-    if current_user
-      # authorized
-      @item = Item.new(item_params)
+    @item = Item.new(item_params)
 
-      if @item.save
-        render json: @item, status: :created, location: @item
-      else
-        render json: @item.errors, status: :unprocessable_entity
-      end
+    if @item.save
+      render json: @item, status: :created, location: @item
     else
-      return head(:unauthorized)
+      render json: @item.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /items/1
   def update
-    if current_user
-      if @item.update(item_params)
-        render json: @item
-      else
-        render json: @item.errors, status: :unprocessable_entity
-      end
+    if @item.update(item_params)
+      render json: @item
     else
-      return head(:unauthorized)
+      render json: @item.errors, status: :unprocessable_entity
     end
   end
 
   # DELETE /items/1
   def destroy
-    if current_user
-      # authorized
-      if @item.destroy
-        render json: {
-          status: 200,
-          message: "'#{@item.artist} - #{@item.title}' removed"
-        }
-      else
-        render json: {
-          message: "Item was not removed"
-        }
-      end
+    if @item.destroy
+      render json: {
+        status: 200,
+        message: "'#{@item.artist} - #{@item.title}' removed"
+      }
     else
-      return head(:unauthorized)
+      render json: {
+        message: "Item was not removed"
+      }
     end
   end
 
@@ -72,5 +59,11 @@ class ItemsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def item_params
       params.require(:item).permit(:artist, :title, :cost, :image, :description)
+    end
+
+    def authorize_route
+      if !current_user
+        head(:unauthorized)
+      end
     end
 end
