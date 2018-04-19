@@ -18,6 +18,7 @@ new Vue({
     currentRoute: window.location.pathname,
     API: 'http://localhost:3000',
     // API: 'https://record-store-api.herokuapp.com'
+    loggedIn: null
   },
   computed: {
     ViewComponent () {
@@ -38,7 +39,7 @@ new Vue({
       let user = this.getCurrentUser()
       axios.get(`${this.API}/sessions`, {headers: user})
         .then(() => {
-          console.log('Authorized')
+          this.loggedIn = true
         })
         .catch(err => {
           window.location.pathname = '/login'
