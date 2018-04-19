@@ -1,6 +1,17 @@
 <template>
 <div v-if="$root.loggedIn">
     <h3>{{ title }}</h3>
+    <ul id="admin-actions">
+      <li v-on:click="logout()"><span>Log Out</span></li>
+      <li v-on:click="goHome()"><span>View Catalog</span></li>
+      <li v-on:click="adminSection = 'add'"><span>Add New Item</span></li>
+      <li v-on:click="adminSection = 'edit'"><span>Edit / Remove Items</span></li>
+    </ul>
+    
+    <hr/>
+
+    <div class="admin-section" v-if="adminSection === 'add'">
+      <h4>Add A New Item</h4>
     <form id="new-item" v-on:submit.prevent="submitNewItem()">
       <div class="filedSet">
         <label for="artist">Artist</label>
