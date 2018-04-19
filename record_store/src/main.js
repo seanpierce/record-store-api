@@ -16,8 +16,8 @@ new Vue({
   el: '#app',
   data: {
     currentRoute: window.location.pathname,
-    API: 'http://localhost:3000',
-    // API: 'https://record-store-api.herokuapp.com'
+    // API: 'http://localhost:3000',
+    API: 'https://record-store-api.herokuapp.com',
     loggedIn: null
   },
   computed: {
