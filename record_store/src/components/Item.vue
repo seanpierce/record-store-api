@@ -1,10 +1,10 @@
 <template>
   <div class="item">
-    <img :src="image"/>
+    <img :src="item.image"/>
     <div class="info">
       <p>
-        {{ artist }} - {{ title }}<br>
-        <span>${{ this.$root.formatMoney(cost) }}</span>
+        {{ item.artist }} - {{ item.title }}<br>
+        <span>${{ this.$root.formatMoney(item.cost) }}</span>
       </p>
     </div>
   </div>
@@ -17,7 +17,11 @@ export default {
     return {
     }
   },
-  props: ['id', 'artist', 'title', 'cost', 'image'],
+  props: {
+    item: {
+      type: Object
+    }
+  },
   methods: {
   },
   mounted: () => {
