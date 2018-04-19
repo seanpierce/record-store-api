@@ -1,6 +1,5 @@
 <template>
 <div>
-  <div v-if="current_user">
     <h3>{{ title }}</h3>
     <form id="new-item" v-on:submit.prevent="submitNewItem()">
       <div class="filedSet">
@@ -26,8 +25,6 @@
       <input v-if="!isLoading" type="submit" value="Submit">
       <Loader v-if="isLoading" />
     </form>
-  </div>
-  <Login v-if="!current_user" />
 </div>
 </template>
 
@@ -35,7 +32,6 @@
 import axios from 'axios';
 import SuccessMessage from './components/successMessage.vue'
 import Loader from './components/Loader.vue'
-import Login from './components/Login.vue'
 
 export default {
   name: 'admin',
@@ -80,14 +76,14 @@ export default {
         this.newItem.image = srcData
       }
       reader.readAsDataURL(file)
-    }
+    },
   },
   mounted: function() {
+    this.$root.authorizeRoute()
   },
   components: {
     Loader,
     SuccessMessage,
-    Login
   }
 }
 </script>
