@@ -1,5 +1,5 @@
 <template>
-<div v-if="$root.loggedIn">
+  <div v-if="$root.loggedIn">
     <h3>{{ title }}</h3>
     <ul id="admin-actions">
       <li v-on:click="logout()"><span>Log Out</span></li>
@@ -12,31 +12,31 @@
 
     <div class="admin-section" v-if="adminSection === 'add'">
       <h4>Add A New Item</h4>
-    <form id="new-item" v-on:submit.prevent="submitNewItem()">
-      <div class="filedSet">
-        <label for="artist">Artist</label>
-        <input type="text" name="artist" v-model="newItem.artist">
-      </div>
-      <div class="filedSet">
-        <label for="title">Title</label>
-        <input type="text" name="title" v-model="newItem.title">
-      </div>
-      <div class="filedSet">
-        <label for="description">Description</label>
-        <textarea name="description" v-model="newItem.description" />
-      </div>
-      <div class="filedSet">
-        <label for="cost">Cost</label>
-        <input type="text" name="cost" v-model="newItem.cost">
-      </div>
-      <div class="filedSet">
-        <label for="image">Image</label>
-        <input id="image-input" type="file" name="image" v-on:change="setFile($event)" />
-      </div>
-      <input v-if="!isLoading" type="submit" value="Submit">
-      <Loader v-if="isLoading" />
-    </form>
-</div>
+      <form id="new-item" v-on:submit.prevent="submitNewItem()">
+        <div class="filedSet">
+          <label for="artist">Artist</label>
+          <input type="text" name="artist" v-model="newItem.artist">
+        </div>
+        <div class="filedSet">
+          <label for="title">Title</label>
+          <input type="text" name="title" v-model="newItem.title">
+        </div>
+        <div class="filedSet">
+          <label for="description">Description</label>
+          <textarea name="description" v-model="newItem.description" />
+        </div>
+        <div class="filedSet">
+          <label for="cost">Cost</label>
+          <input type="text" name="cost" v-model="newItem.cost">
+        </div>
+        <div class="filedSet">
+          <label for="image">Image</label>
+          <input id="image-input" type="file" name="image" v-on:change="setFile($event)" />
+        </div>
+        <input v-if="!isLoading" type="submit" value="Submit">
+        <Loader v-if="isLoading" />
+      </form>
+    </div>
 
     <div class="admin-section" v-if="adminSection === 'edit'">
       <h4>Edit / Remove Items</h4>
@@ -66,8 +66,10 @@ export default {
     return {
       title: 'Admin',
       newItem: {},
+      items: [],
       isLoading: false,
-      current_user: null
+      current_user: null,
+      adminSection: null
     }
   },
   methods: {
@@ -104,6 +106,29 @@ export default {
       document.getElementById("image-input").value = ""
       // more in the future?
     },
+    logout() {
+      let user = this.$root.getCurrentUser()
+      axios.delete(`${this.$root.API}/sessions`, {headers:user})
+        .then(() => {
+          this.$root.authorizeRoute()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    goHome() {
+      window.location.pathname = '/'
+    },
+    getItems() {
+      this.isLoading = true
+      axios.get(`${this.$root.API}/items`)
+        .then(res => {
+          this.items = res.data
+          this.isLoading = false;
+        }, err => {
+          console.log(err)
+        })
+    },
   },
   mounted: function() {
     this.$root.authorizeRoute()
@@ -112,6 +137,12 @@ export default {
     Loader,
     SuccessMessage,
   },
+  watch: {
+    adminSection: function (val) {
+      if (val === 'edit' && this.items.length === 0)
+        this.getItems()
+    },
+  }
 }
 </script>
 
@@ -131,5 +162,35 @@ export default {
   }
   .filedSet {
     margin-bottom: 1em;
+  }
+  #admin-actions {
+    list-style: none;
+    padding: 0;
+    span {
+      cursor: pointer;
+      transition: all 0.25s;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+  table#edit-items {
+    border-collapse: collapse;
+  }
+  tr.edit-item {
+    border-collapse: collapse;
+    td {
+      padding: 4px;
+      transition: all 0.25s;
+    }
+    td.edit-action {
+      cursor: pointer;
+      &:hover {
+        background-color: lightgray;
+      }
+    }
+    &:nth-child(odd) {
+      background-color: #f3f3f3;
+    }
   }
 </style>
