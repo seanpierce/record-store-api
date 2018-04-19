@@ -5,24 +5,19 @@
       <Loader v-if="isLoading">Loading...</Loader>
       <div v-for="(item, index) in items" :key="index" class="item">
         <div v-on:click="setSelectedItem(item)">
-          <Item :id="item.id" :artist="item.artist" :title="item.title" :cost="item.cost" :image="item.image"/>
+          <Item :item="item"/>
         </div>
       </div>
     </div>
-    <div v-if="selectedItem" class="selected-item">
-      <div class="title">{{ selectedItem.title }}</div>
-      <div class="artist">{{ selectedItem.artist }}</div>
-      <div class="cost">${{ this.$root.formatMoney(selectedItem.cost) }}</div>
-      <div class="description">{{ selectedItem.description }}</div>
-      <p v-on:click="selectedItem = null" class="back">< Back</p>
-    </div>
+    <ItemDetails v-if="selectedItem" :selectedItem="selectedItem" />
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import Item from './components/item.vue'
-import Loader from './components/loader.vue'
+import Item from './components/Item.vue'
+import Loader from './components/Loader.vue'
+import ItemDetails from './components/ItemDetails.vue'
 
 export default {
   name: 'home',
@@ -53,7 +48,8 @@ export default {
   },
   components: {
     Item,
-    Loader
+    Loader,
+    ItemDetails
   }
 }
 </script>
