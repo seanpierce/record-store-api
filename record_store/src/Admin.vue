@@ -46,15 +46,10 @@ export default {
   methods: {
     submitNewItem() {
       this.isLoading = true
-      let config = {
-        headers: {
-          'X-User-Email': 'sumler.sean@gmail.com',
-          'X-User-Token': 'WNzzpCB3yygjYmZu--45'
-        }
-      }
       let item = {...this.newItem}
+      let user = this.$root.getCurrentUser()
       console.log('Posting item:', item)
-      axios.post(`${this.$root.API}/items`, item, config)
+      axios.post(`${this.$root.API}/items`, item, {headers:user})
         .then(res => {
           this.newItem = {}
           console.log(res)
