@@ -38,7 +38,6 @@ export default {
     getItems() {
       axios.get(`${this.$root.API}/items`)
       .then(res => {
-        console.log(res)
         this.items = res.data
         this.isLoading = false;
       }, err => {
