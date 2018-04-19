@@ -20,7 +20,7 @@
       </div>
       <div class="filedSet">
         <label for="image">Image</label>
-        <input type="file" name="image" v-on:change="setFile($event)">
+        <input id="image-input" type="file" name="image" v-on:change="setFile($event)" />
       </div>
       <input v-if="!isLoading" type="submit" value="Submit">
       <Loader v-if="isLoading" />
@@ -54,6 +54,7 @@ export default {
           this.newItem = {}
           console.log(res)
           this.isLoading = false
+          this.resetFileInputs()
         })
         .catch(err => {
           console.log(err)
@@ -71,6 +72,10 @@ export default {
         this.newItem.image = srcData
       }
       reader.readAsDataURL(file)
+    },
+    resetFileInputs() {
+      document.getElementById("image-input").value = ""
+      // more in the future?
     },
   },
   mounted: function() {
