@@ -1,8 +1,11 @@
 class SessionsController < ApplicationController
+
+  # is authorized? "/get"
   def show
     current_user ? head(:ok) : head(:unauthorized)
   end
 
+  # login "/post"
   def create
     user = User.where(email: params[:email]).first
 
@@ -13,6 +16,7 @@ class SessionsController < ApplicationController
     end
   end
 
+  # log out "/destroy"
   def destroy
     current_user&.authentication_token = nil
     if current_user.save
