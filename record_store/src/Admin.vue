@@ -37,6 +37,22 @@
       <Loader v-if="isLoading" />
     </form>
 </div>
+
+    <div class="admin-section" v-if="adminSection === 'edit'">
+      <h4>Edit / Remove Items</h4>
+      <Loader v-if="isLoading" />
+      <table id="edit-items">
+        <tbody>
+          <tr v-for="(item, index) in items" :key="index" class="edit-item">
+            <td class="edit-action">Edit</td>
+            <td class="edit-action">Remove</td>
+            <td>{{item.artist}} - {{item.title}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
 </template>
 
 <script>
