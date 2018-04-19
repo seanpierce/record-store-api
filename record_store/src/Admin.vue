@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-if="$root.loggedIn">
     <h3>{{ title }}</h3>
     <form id="new-item" v-on:submit.prevent="submitNewItem()">
       <div class="filedSet">
@@ -79,7 +79,7 @@ export default {
   components: {
     Loader,
     SuccessMessage,
-  }
+  },
 }
 </script>
 
