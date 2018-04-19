@@ -23,9 +23,9 @@ export default {
       border: 4px solid #fff;
       border-top: 4px solid #333;
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 0.5s linear infinite;
+      width: 20px;
+      height: 20px;
+      animation: spin 0.4s linear infinite;
   }
 
   @keyframes spin {
